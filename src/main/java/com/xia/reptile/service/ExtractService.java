@@ -73,7 +73,6 @@ public class ExtractService {
                 results = doc.select(resultTagName);  
                 break;  
             default:  
-            	//System.out.println(doc);
                 //当resultTagName为空时默认去body标签  
                 if (StringUtils.isEmpty(resultTagName)) {  
                     results = doc.getElementsByTag("body");  
