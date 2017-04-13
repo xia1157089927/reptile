@@ -40,8 +40,8 @@ public class ExtractService {
             int requestType = rule.getRequestMoethod();  
   
             Connection conn = Jsoup.connect(url);  
+            //conn.ignoreContentType(true);
             // 设置查询参数  
-  
             if (params != null) {  
                 for (int i = 0; i < params.length; i++) {  
                     conn.data(params[i], values[i]);  
@@ -73,12 +73,12 @@ public class ExtractService {
                 results = doc.select(resultTagName);  
                 break;  
             default:  
+            	//System.out.println(doc);
                 //当resultTagName为空时默认去body标签  
                 if (StringUtils.isEmpty(resultTagName)) {  
                     results = doc.getElementsByTag("body");  
                 }  
             }  
-  
             for (Element result : results) {  
                 Elements links = result.getElementsByTag("a");  
   
@@ -111,7 +111,7 @@ public class ExtractService {
             throw new RuleException("url不能为空！");  
         }  
         
-        if (!url.startsWith("http://")) {  
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {  
             throw new RuleException("url的格式不正确！");  
         }  
   
