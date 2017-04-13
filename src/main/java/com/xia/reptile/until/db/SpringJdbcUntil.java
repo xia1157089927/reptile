@@ -288,8 +288,7 @@ public class SpringJdbcUntil {
 		int exc = -1;
 		try {
 			exc = jdbcTemplate.queryForObject(sql, objects, Integer.class);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			exc = -1;
 		}
 		return exc;
@@ -320,23 +319,18 @@ public class SpringJdbcUntil {
 	 * @param sql
 	 * @return
 	 */
-	public String getEasyCntSql (String sql)
-	{
+	public String getEasyCntSql (String sql) {
 		
 		String find = "(O|o)(R|r)(D|d)(E|e)(R|r)\\s+(B|b)(Y|y)";
 		String tmp = "XXXXXX";
 		String sql1 = sql.replaceAll(find, tmp);
-		if (sql1.contains(tmp))
-		{
+		if (sql1.contains(tmp)) {
 			String sql2 = sql1.substring(sql1.lastIndexOf(tmp));
-			if (sql2.contains(")"))
-			{
+			if (sql2.contains(")")) {
 				String sql3 = sql2.substring(0, sql2.lastIndexOf(")"));
 				sql = sql1.replaceAll(sql3, "");
 				sql = sql.replaceAll(tmp, "order by");
-			}
-			else
-			{
+			} else {
 				sql = sql1.replaceAll(sql2, "");
 				sql = sql.replaceAll(tmp, "order by");
 			}
@@ -370,25 +364,19 @@ public class SpringJdbcUntil {
 	 * @param sql
 	 * @return
 	 */
-	public String replaceSqlOrder (String sql)
-	{
+	public String replaceSqlOrder (String sql) {
 		String oldSql = sql;
 		sql = sql.toLowerCase();
 		String newSql = "";
-		if (sql.contains(" order "))
-		{
+		if (sql.contains(" order ")) {
 			String orderSql = oldSql.substring(sql.lastIndexOf(" order "));
-			if (orderSql.contains(")"))
-			{
+			if (orderSql.contains(")")) {
 				newSql = oldSql;
 			}
-			else
-			{
+			else {
 				newSql = oldSql.substring(0, sql.lastIndexOf(" order "));
 			}
-		}
-		else
-		{
+		} else {
 			newSql = oldSql;
 		}
 		return newSql;
