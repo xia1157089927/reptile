@@ -88,9 +88,17 @@
 		    <version>2.5.0</version>
 		</dependency>
 		
+		<!-- spring boot jdbc -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+		    <groupId>org.jsoup</groupId>
+		    <artifactId>jsoup</artifactId>
+		    <version>1.7.2</version>
 		</dependency>
 		
   </dependencies>
