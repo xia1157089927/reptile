@@ -19,6 +19,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
 /**
@@ -435,5 +436,46 @@ public class SpringJdbcUntil {
 		}
 		return exc;
 	}
+	
+	/**
+	 * 事务处理
+	 * @param batchSqls
+	 * @return
+	 */
+	public int doInTransaction (final BatchSql batch) {
+		int exc = 1;
+		if (batch == null) {
+			exc = 0;
+		}
+		
+		try {
+			transactionTemplateReptile.execute(new TransactionCallbackWithoutResult(){
+				public void doInTransactionWithoutResult (TransactionStatus status) {
+					List<Map<String, Object>> sqlList = batch.getSqlList();
+					for (int i = 0; i < sqlList.size(); i++) {
+						Map<String, Object> sqlMap = sqlList.get(i);
+						String sql = (String) sqlMap.get("sql");
+						Object[] objects = (Object[]) sqlMap.get("objects");
+						String sql_type = (String) sqlMap.get("sql_type");
+						
+						// 如果包括大字段操作
+						if (sql_type != null && sql_type.equals("clob")) {
+							int[] colIndex = (int[]) sqlMap.get("clob_index");
+							logger.info("updateClob(sql, objects, colIndex)" + colIndex);
+						}
+						else {
+							getJdbcTemplate().update(sql, objects);
+						}
+					}
+				}
+			});
+		}
+		catch (Exception e) {
+			exc = 0;
+		}
+		return exc;
+	}
+	
+	
 	
 }
