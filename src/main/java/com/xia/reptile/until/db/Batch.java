@@ -194,12 +194,10 @@ public abstract class Batch extends BatchBase {
 	 */
 	public int update (String sql, Object[] objects) throws Exception {
 		int exc = 1;
-		try
-		{
+		try {
 			this.getJdbcTemplate().update(sql, objects);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			exc = 0;
 			getError(e, sql, objects);
 		}
