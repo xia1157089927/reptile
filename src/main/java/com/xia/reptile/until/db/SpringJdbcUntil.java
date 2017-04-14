@@ -40,13 +40,17 @@ public class SpringJdbcUntil {
 	
 	private static int DEFAULT_FETCHSIZE = 31;
 	
+	public JdbcTemplate getJdbcTemplate () {
+		return jdbcTemplate;
+	}
+	
 	/**
 	 * 执行原生的SQL  select
 	 * @param sql
 	 * @return
 	 */
 	public List<Map<String,Object>> getList(String sql, Object[] objs){
-		return jdbcTemplate.queryForList(sql, objs);
+		return this.getJdbcTemplate().queryForList(sql, objs);
 	}
 	
 	/**
@@ -56,7 +60,7 @@ public class SpringJdbcUntil {
 	 * @return
 	 */
 	public int save(String sql, Object[] objs){
-		return jdbcTemplate.update(sql, objs);
+		return this.getJdbcTemplate().update(sql, objs);
 	}
 	
 	/**
@@ -68,7 +72,7 @@ public class SpringJdbcUntil {
 	 */
 	public Object queryForObject (String sql, Object[] objects, RowMapper<?> rowMapper) {
 		Object object = null;
-		object = jdbcTemplate.queryForObject(sql, objects, rowMapper);
+		object = this.getJdbcTemplate().queryForObject(sql, objects, rowMapper);
 		return object;
 	}
 	
@@ -81,7 +85,7 @@ public class SpringJdbcUntil {
 	public Map<String, Object> queryForMap (String sql, Object[] objects) {
 		Map<String, Object> map = null;
 		try {
-			map = jdbcTemplate.queryForMap(sql, objects);
+			map = this.getJdbcTemplate().queryForMap(sql, objects);
 		}
 		catch (EmptyResultDataAccessException e) {
 			
@@ -96,7 +100,7 @@ public class SpringJdbcUntil {
 	public Map<String, Object> queryForMap (String sql) {
 		Map<String, Object> map = null;
 		try {
-			map = jdbcTemplate.queryForMap(sql);
+			map = this.getJdbcTemplate().queryForMap(sql);
 		}
 		catch (EmptyResultDataAccessException e) {
 			
@@ -117,7 +121,7 @@ public class SpringJdbcUntil {
 	 */
 	public String queryForString (String sql, Object[] args) {
 		try {
-			return jdbcTemplate.queryForObject(sql, args, String.class);
+			return this.getJdbcTemplate().queryForObject(sql, args, String.class);
 		}
 		catch (Exception ex) {
 			return "";
@@ -126,7 +130,7 @@ public class SpringJdbcUntil {
 	
 	public String queryForString (String sql) {
 		try {
-			return jdbcTemplate.queryForObject(sql, null, String.class);
+			return this.getJdbcTemplate().queryForObject(sql, null, String.class);
 		}
 		catch (Exception ex) {
 			logger.error(sql);
@@ -136,7 +140,7 @@ public class SpringJdbcUntil {
 	
 	public String queryForString (String sql, List<String> list) {
 		try {
-			return jdbcTemplate.queryForObject(sql, list.toArray(), String.class);
+			return this.getJdbcTemplate().queryForObject(sql, list.toArray(), String.class);
 		}
 		catch (Exception ex) {
 			logger.error(sql);
@@ -154,7 +158,7 @@ public class SpringJdbcUntil {
 		Map<String, Object> map = null;
 		Map<String, Object> temp = new HashMap<String, Object>();
 		try {
-			map = jdbcTemplate.queryForMap(sql, objects);
+			map = this.getJdbcTemplate().queryForMap(sql, objects);
 			if (map != null) {
 				Set<String> s = map.keySet();
 				for (Iterator<String> iter = s.iterator(); iter.hasNext();) {
@@ -208,7 +212,7 @@ public class SpringJdbcUntil {
 	 * @return
 	 */
 	public List<Map<String, Object>> queryForList (String sql, int fetchSize) {
-		JdbcTemplate jdbc = jdbcTemplate;
+		JdbcTemplate jdbc = this.getJdbcTemplate();
 		jdbc.setFetchSize(fetchSize);
 		
 		List<Map<String, Object>> list = null;
@@ -230,7 +234,7 @@ public class SpringJdbcUntil {
 	 * @return
 	 */
 	public List<Map<String, Object>> queryForList (String sql, Object[] objects, int fetchSize) {
-		JdbcTemplate jdbc = jdbcTemplate;
+		JdbcTemplate jdbc = this.getJdbcTemplate();
 		jdbc.setFetchSize(fetchSize);
 		
 		List<Map<String, Object>> list = null;
@@ -264,7 +268,7 @@ public class SpringJdbcUntil {
 	public int update (String sql, Object[] objects) {
 		int exc = 1;
 		try {
-			jdbcTemplate.update(sql, objects);
+			this.getJdbcTemplate().update(sql, objects);
 		}
 		catch (Exception e) {
 			exc = 0;
@@ -275,7 +279,7 @@ public class SpringJdbcUntil {
 	public int update (String sql) {
 		int exc = 1;
 		try {
-			jdbcTemplate.update(sql);
+			this.getJdbcTemplate().update(sql);
 		}
 		catch (Exception e) {
 			exc = 0;
@@ -293,7 +297,7 @@ public class SpringJdbcUntil {
 	public int queryForInt (String sql, Object[] objects) {
 		int exc = -1;
 		try {
-			exc = jdbcTemplate.queryForObject(sql, objects, Integer.class);
+			exc = this.getJdbcTemplate().queryForObject(sql, objects, Integer.class);
 		} catch (Exception e) {
 			exc = -1;
 		}
@@ -316,7 +320,7 @@ public class SpringJdbcUntil {
 	 * @return
 	 */
 	public Long queryForLong (String sql) {
-		return jdbcTemplate.queryForObject(sql, Long.class);
+		return this.getJdbcTemplate().queryForObject(sql, Long.class);
 	}
 	
 	
@@ -410,7 +414,7 @@ public class SpringJdbcUntil {
 			exc = transactionTemplateReptile.execute(new TransactionCallback<Integer>(){
 				public Integer doInTransaction(final TransactionStatus status) {
 					try {
-						batch.setParams(jdbcTemplate, status);
+						batch.setParams(getJdbcTemplate(), status);
 						batch.execute();
 					}
 					catch (final Exception e)
