@@ -13,8 +13,7 @@ import org.springframework.util.StringUtils;
 
 import com.xia.reptile.dto.LinkTypeData;
 import com.xia.reptile.dto.Rule;
-
-import exception.RuleException;
+import com.xia.reptile.exception.RuleException;
 
 public class ExtractService {
 	/** 

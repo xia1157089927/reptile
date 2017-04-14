@@ -1,4 +1,4 @@
-package exception;
+package com.xia.reptile.exception;
 
 public class RuleException extends RuntimeException {
 
