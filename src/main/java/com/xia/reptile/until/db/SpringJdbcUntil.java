@@ -35,8 +35,8 @@ public class SpringJdbcUntil {
 	@Resource(name="reptileDataSource")
 	private DataSource dataSource; 
 	
-	@Resource(name="transactionTemplate")
-	private TransactionTemplate transactionTemplate;
+	@Resource(name="transactionTemplateReptile")
+	private TransactionTemplate transactionTemplateReptile;
 	
 	private static int DEFAULT_FETCHSIZE = 31;
 	
@@ -407,7 +407,7 @@ public class SpringJdbcUntil {
 		}
 		
 		try {
-			exc = transactionTemplate.execute(new TransactionCallback<Integer>(){
+			exc = transactionTemplateReptile.execute(new TransactionCallback<Integer>(){
 				public Integer doInTransaction(final TransactionStatus status) {
 					try {
 						batch.setParams(jdbcTemplate, status);

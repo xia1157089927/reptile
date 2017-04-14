@@ -61,8 +61,8 @@ public class DiagnosisDBConfig {
         return new JpaTransactionManager(entityManagerFactoryReptile(builder).getObject());
     }
     
-    @Bean(name="transactionTemplate")
-    public TransactionTemplate transactionTemplate(EntityManagerFactoryBuilder builder) {
+    @Bean(name="transactionTemplateReptile")
+    public TransactionTemplate transactionTemplateReptile(EntityManagerFactoryBuilder builder) {
         return new TransactionTemplate(transactionManagerReptile(builder));
     }
 }
