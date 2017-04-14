@@ -17,6 +17,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
  * 执行原生	SQL 的工具类
@@ -31,6 +34,9 @@ public class SpringJdbcUntil {
 	
 	@Resource(name="reptileDataSource")
 	private DataSource dataSource; 
+	
+	@Resource(name="transactionTemplate")
+	private TransactionTemplate transactionTemplate;
 	
 	private static int DEFAULT_FETCHSIZE = 31;
 	
@@ -387,6 +393,43 @@ public class SpringJdbcUntil {
 			value = "";
 		}
 		return String.valueOf(value);
+	}
+	
+	/**
+	 * 事务处理
+	 * @param batchSqls
+	 * @return
+	 */
+	public int doInTransaction (final Batch batch) {
+		int exc = 1;
+		if (batch == null) {
+			return 0;
+		}
+		
+		try {
+			exc = transactionTemplate.execute(new TransactionCallback<Integer>(){
+				public Integer doInTransaction(final TransactionStatus status) {
+					try {
+						batch.setParams(jdbcTemplate, status);
+						batch.execute();
+					}
+					catch (final Exception e)
+					{
+						batch.rollBack();
+						batch.getError(e);
+						e.printStackTrace();
+						return 0;
+					}
+					return 1;
+				}
+			});
+		}
+		catch (Exception e) {
+			exc = 0;
+			batch.rollBack();
+			batch.getError(e);
+		}
+		return exc;
 	}
 	
 }

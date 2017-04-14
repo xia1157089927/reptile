@@ -17,6 +17,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Configuration
 @EnableTransactionManagement
@@ -32,12 +33,12 @@ public class DiagnosisDBConfig {
     @Primary
     @Bean(name = "entityManagerReptile")
     public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactoryDiagnosis(builder).getObject().createEntityManager();
+        return entityManagerFactoryReptile(builder).getObject().createEntityManager();
     }
 
     @Primary
     @Bean(name = "entityManagerFactoryReptile")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryDiagnosis (EntityManagerFactoryBuilder builder) {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryReptile (EntityManagerFactoryBuilder builder) {
         LocalContainerEntityManagerFactoryBean s =  builder
                 .dataSource(reptileDataSource)
                 .properties(getVendorProperties(reptileDataSource))
@@ -56,8 +57,12 @@ public class DiagnosisDBConfig {
 
     @Primary
     @Bean(name = "transactionManagerReptile")
-    public PlatformTransactionManager transactionManagerDiagnosis(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(entityManagerFactoryDiagnosis(builder).getObject());
+    public PlatformTransactionManager transactionManagerReptile(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(entityManagerFactoryReptile(builder).getObject());
     }
-
+    
+    @Bean(name="transactionTemplate")
+    public TransactionTemplate transactionTemplate(EntityManagerFactoryBuilder builder) {
+        return new TransactionTemplate(transactionManagerReptile(builder));
+    }
 }
