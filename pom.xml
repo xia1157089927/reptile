@@ -12,16 +12,34 @@
   <properties>
 	<start-class>com.sinoauto.Application</start-class>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<!-- set thymeleaf version 
+    <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
+    <thymeleaf-layout-dialect.version>2.0.0</thymeleaf-layout-dialect.version>
+    -->
+    <!--set java version-->
 	<java.version>1.8</java.version>
 	<swagger.version>2.5.0</swagger.version>
 	<sqlserver.version>4.0</sqlserver.version>
   </properties>
   
   <dependencies>
+  		<!-- thymeleaf 模板引擎   -->
+		<dependency>  
+	        <groupId>org.springframework.boot</groupId>  
+	        <artifactId>spring-boot-starter-thymeleaf</artifactId>  
+		</dependency> 
+	    <dependency>
+	        <groupId>nz.net.ultraq.thymeleaf</groupId>
+	        <artifactId>thymeleaf-layout-dialect</artifactId>
+    	</dependency>
+		
+  		
+		<!-- spring-boot-starter-thymeleaf下面已经包括了spring-boot-starter-web,所以可以把spring-boot-starter-web的依赖去掉. 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		 -->
 		<dependency>
 		    <groupId>javax</groupId>
 		    <artifactId>javaee-api</artifactId>
@@ -33,6 +51,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- swagger2 start -->
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
@@ -43,11 +63,15 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
-		<!-- <dependency>
+		<!-- swagger2 end -->
+		
+		<!-- ms sql jar
+		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>sqljdbc4</artifactId>
 			<version>${sqlserver.version}</version>
-		</dependency> -->
+		</dependency> 
+		-->
 		
 		<dependency>
 			<groupId>mysql</groupId>
@@ -75,13 +99,15 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 		</dependency>
+		
+		<!-- spring boot 配置处理器 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/com.belerweb/pinyin4j -->
+		<!-- https://mvnrepository.com/artifact/com.belerweb/pinyin4j 将汉字编程对应的拼音，以方便数据的处理 -->
 		<dependency>
 		    <groupId>com.belerweb</groupId>
 		    <artifactId>pinyin4j</artifactId>
@@ -94,7 +120,7 @@
 		    <artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup 网页爬虫相关依赖 -->
 		<dependency>
 		    <groupId>org.jsoup</groupId>
 		    <artifactId>jsoup</artifactId>

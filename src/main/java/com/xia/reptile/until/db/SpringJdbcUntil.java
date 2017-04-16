@@ -34,7 +34,7 @@ public class SpringJdbcUntil {
 	private JdbcTemplate jdbcTemplate;
 	
 	@Resource(name="reptileDataSource")
-	private DataSource dataSource; 
+	private DataSource reptileDataSource; 
 	
 	@Resource(name="transactionTemplateReptile")
 	private TransactionTemplate transactionTemplateReptile;
@@ -359,7 +359,7 @@ public class SpringJdbcUntil {
 	public ProcHelper getProcHelper (String sql) {
 		ProcHelper proc = null;
 		try {
-			proc = new ProcHelper(this.dataSource, sql);
+			proc = new ProcHelper(this.reptileDataSource, sql);
 			proc.setSql(sql);
 		}
 		catch (Exception e)
