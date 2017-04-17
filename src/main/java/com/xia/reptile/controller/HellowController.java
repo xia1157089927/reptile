@@ -19,4 +19,11 @@ public class HellowController {
         map.addAttribute("host", "http://blog.didispace.com");
         return "index";
     }
+	
+	@RequestMapping("/template")
+	public String template(ModelMap map){
+		map.addAttribute("host", "http://blog.template.com");
+        return "template";
+	}
+	
 }
