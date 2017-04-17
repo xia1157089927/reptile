@@ -127,6 +127,12 @@
 		    <version>1.7.2</version>
 		</dependency>
 		
+		<!-- spring security -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+		
   </dependencies>
 	<build>
 		<plugins>
