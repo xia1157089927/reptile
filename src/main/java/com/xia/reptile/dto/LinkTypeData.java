@@ -18,6 +18,15 @@ public class LinkTypeData {
      * 内容 
      */  
     private String content;
+    
+    private String downLoadUrl;
+    
+	public String getDownLoadUrl() {
+		return downLoadUrl;
+	}
+	public void setDownLoadUrl(String downLoadUrl) {
+		this.downLoadUrl = downLoadUrl;
+	}
 	public int getId() {
 		return id;
 	}

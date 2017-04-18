@@ -60,6 +60,7 @@ public class ExtractService {
   
             //处理返回数据  
             Elements results = new Elements();  
+            System.out.println("results==>" + doc.html());
             switch (type) {  
             case Rule.CLASS:  
                 results = doc.getElementsByClass(resultTagName);  
@@ -76,11 +77,13 @@ public class ExtractService {
                 if (StringUtils.isEmpty(resultTagName)) {  
                     results = doc.getElementsByTag("body");  
                 }  
-            }  
+            } 
+            
             for (Element result : results) {  
                 Elements links = result.getElementsByTag("a");  
   
                 for (Element link : links) {  
+                	//System.out.println("links==> " + link);
                     //必要的筛选  
                     String linkHref = link.attr("href");  
                     String linkText = link.text();  
@@ -88,9 +91,15 @@ public class ExtractService {
                     data = new LinkTypeData();  
                     data.setLinkHref(linkHref);  
                     data.setLinkText(linkText);  
+                    
+                    if(link.hasAttr("thundertype") || link.hasAttr("thunderrestitle")){
+                    	System.out.println("links==> " + link);
+                    }
   
                     datas.add(data);  
                 }  
+                
+                
             }  
   
         } catch (IOException e) {  

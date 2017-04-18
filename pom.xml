@@ -127,11 +127,11 @@
 		    <version>1.7.2</version>
 		</dependency>
 		
-		<!-- spring security -->
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+		    <groupId>net.sourceforge.htmlunit</groupId>
+		    <artifactId>htmlunit</artifactId>
+		    <version>2.26</version>
+		</dependency>
 		
   </dependencies>
 	<build>

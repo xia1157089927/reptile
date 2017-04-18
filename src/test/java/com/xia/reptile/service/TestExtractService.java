@@ -1,5 +1,7 @@
 package com.xia.reptile.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -8,6 +10,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
+import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.WebClient;
 import com.xia.reptile.Application;
 import com.xia.reptile.dto.LinkTypeData;
 import com.xia.reptile.dto.Rule;
@@ -37,7 +43,7 @@ public class TestExtractService {
 	
 	@Test
 	public void getDatasByCssQueryUserBaidu() {  
-	    Rule rule = new Rule("http://www.ygdy8.net/html/gndy/dyzz/20170411/53686.html",  
+	    Rule rule = new Rule("http://www.ygdy8.net/",  
 	            			 new String[] { "word", "ct", "rn", "ie",    "rsv_bp", "prevct", "tn"  }, 
 	            			 new String[] { "支付宝", "1", "20", "utf-8", "1",      "no",     "news" },  
             			 	 null, -1, Rule.GET);  
@@ -45,12 +51,58 @@ public class TestExtractService {
 	    printf(extracts);  
 	} 
 	
+	///html/dongman/new/20120426/37429.html
+	@Test
+	public void getDateBySunny() {
+		String url = "http://www.ygdy8.net/html/dongman/new/20120426/37429.html";
+		WebClient webClient = new WebClient(BrowserVersion.getDefault()); 
+		Page page = null;
+		try {
+			page = webClient.getPage(url);
+		} catch (FailingHttpStatusCodeException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InputStream is;
+		try {
+			is = page.getWebResponse().getContentAsStream();
+			System.out.println(is.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		/*Rule rule = new Rule("http://www.ygdy8.net/html/dongman/new/20120426/37429.html", null, null, null, -1, Rule.GET);  
+		 List<LinkTypeData> extracts = ExtractService.extract(rule);  
+		 printf(extracts); */ 
+	}
+	
+	public static void main(String[] args) {
+		String url = "http://www.ygdy8.net/html/dongman/new/20120426/37429.html";
+		WebClient webClient = new WebClient(BrowserVersion.getDefault()); 
+		Page page = null;
+		try {
+			page = webClient.getPage(url);
+		} catch (FailingHttpStatusCodeException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InputStream is;
+		try {
+			is = page.getWebResponse().getContentAsStream();
+			System.out.println(is.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void printf(List<LinkTypeData> datas) {  
 	    for (LinkTypeData data : datas) {  
-	        System.out.println(data.getLinkText());  
-	        System.out.println(data.getLinkHref());  
-	        System.out.println("***********************************");  
+	        if(!data.getLinkHref().contains("/game/")){
+	        	System.out.println(data.getLinkText());  
+	        	System.out.println(data.getLinkHref());  
+	        	System.out.println("***********************************");  
+	        }
 	    }  
 	
 	}  
