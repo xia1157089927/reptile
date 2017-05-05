@@ -1,7 +1,5 @@
 package com.xia.reptile.service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import org.junit.Test;
@@ -11,10 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
-import com.gargoylesoftware.htmlunit.Page;
-import com.gargoylesoftware.htmlunit.WebClient;
 import com.xia.reptile.Application;
 import com.xia.reptile.dto.LinkTypeData;
 import com.xia.reptile.dto.Rule;

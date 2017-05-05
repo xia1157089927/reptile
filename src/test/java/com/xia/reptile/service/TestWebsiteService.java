@@ -29,7 +29,7 @@ public class TestWebsiteService {
 		params.add("http://www.dytt8.net/");
 		System.out.println(websiteService.saveWebsiteInfo(params));*/
 		String url = "http://www.veryhot.cc/index.php?s=/vod-read-id-25473.html";
-		final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
+		final WebClient webClient = new WebClient(BrowserVersion.FIREFOX_38);
 		webClient.getOptions().setCssEnabled(false);
 	    webClient.getOptions().setJavaScriptEnabled(true);
 	    webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
@@ -37,7 +37,9 @@ public class TestWebsiteService {
 	    webClient.getOptions().setDoNotTrackEnabled(false);
 	    webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 		try {
+			@SuppressWarnings("unused")
 			final HtmlPage startPage = webClient.getPage(url);
+			websiteService.equals("");
 			System.out.println();
 			//assertEquals("HtmlUnit - Welcome to HtmlUnit", startPage.getTitleText());
 		} catch (FailingHttpStatusCodeException e) {
